@@ -12,144 +12,233 @@
 
 ❤️❤️😇😍🤘❤️❤️
 
-### Diff
+## Checking
+
+### Status
+
+Check the status of working directory and staging area
 
 ```
-git diff feature/my_branch develop > file.diff
+git status
+```
+
+Show changes between HEAD and working directory
+
+```
+git diff
+```
+
+### Log
+
+Show the list of commits in one line format
+
+```
+git log --oneline
+```
+
+Show commits that make add or remove a certain string
+
+```
+git log -S 'LoginViewController'
+```
+
+Search commits that contain a log message
+
+```
+git log — all — grep=’day of week’
+```
+
+### Check out
+
+Checkout a tag
+
+```
+    git checkout tagname
+
+    git checkout -b newbranchname tagname
+```
+
+Checkout a branch:
+
+    git checkout destination_branch
+
+Use -m if there is merge conflict:
+
+    git checkout -m master // from feature branch to master
+
+Checkout a commit:
+
+    git checkout commit_hash
+
+    git checkout -b newbranchname HEAD~4
+
+    git checkout -b newbranchname commit_hash
+
+    git checkout commit_hash file
+
+Checkout a file:
+
+    git checkout c5f567 -- Relative/Path/To/File
+
+### Diff
+
+Make and apply diff file between 2 branches
+
+```
+git diff BRANCH ANOTHER_BRANCH > file.diff
 git apply file.diff
 ```
 
-### 🔍 Status
+## Committing
 
-Check the status of working directory and staging area:
+### Tag
 
-    git status
+List all tags
 
-Show changes between HEAD and working directory:
+```
+git tag
+```
 
-    git diff
+Tag a commit
 
-Show the list of commits in one line format:
+```
+git tag -a TAG -m "TAG MESSAGE"
+```
 
-    git log --oneline
+Delete remote tags
 
-Show commits that make add or remove a certain string:
+```
+git push --delete REMOTE TAG
+```
 
-    git log -S 'LoginViewController'
+```
+git push origin :TAG
+```
 
-Search commits that contain a log message:
+Push tag to remote
 
-    git log — all — grep=’day of week’
+```
+git push REMOTE TAG
+```
 
-### 🔍 Tag
+Rename tag
 
-List all tags:
+```
+git tag NEW_TAG OLD_TAG
+git tag -d OLD_TAG
+```
 
-    git tag
+Move tag from one commit to another commit
 
-Tag a commit:
+```
+git push origin :TAG
+git tag -fa TAG
+git push REMOTE --tags
+```
 
-    git tag -a 1.4 -m "my version 1.4"
+### Remote
 
-Delete remote tags:
+List all remote
 
-    git push --delete origin tagname
+```
+git remote
+```
 
-    git push origin :tagname
+Rename remote
 
-Push tag to remote:
+```
+git remote rename OLD_REMOTE NEW_REMOTE
+```
 
-    git push origin tagname
+Remove stale remote tracking branches
 
-Rename tag:
+```
+git remote prune REMOTE
+```
 
-    git tag new old
-    git tag -d old
-    git push origin :refs/tags/old
-    git push --tags
+### Branch
 
-Move tag from one commit to another commit:
+List all branches
 
-    git push origin :refs/tags/<tagname>
-    git tag -fa tagname
-    git push origin master --tags
+```
+git branch
+```
 
-### 🔍 Remote
+Create the branch on your local machine and switch in this branch
 
-List all remote:
+```
+git checkout -b BRANCH
+```
 
-    git remote
+Create branch from commit
 
-Rename remote:
+```
+git branch BRANCH COMMIT_HASH
+```
 
-    git remote rename old new
+Push the branch to remote
 
-Remove stale remote tracking branches:
+git push REMOTE BRANCH
 
-    git remote prune origin
+Rename other branch
 
-### 🔍 Branch
+```
+git branch -m OLD_BRANCH NEW_BRANCH
+```
 
-List all branches:
+Rename current branch
 
-    git branch
+```
+git branch -m NEW_BRANCH
+```
 
-Create the branch on your local machine and switch in this branch:
+Rename remote branch
 
-    git checkout -b branch_name
+```
+git branch -m old new               # Rename branch locally    
+Git push origin :old                 # Delete the old branch    
+git push --set-upstream origin new   # Push the new branch, set local branch to track the new remote
+```
 
-Create branch from commit:
+Delete a branch locally and remote
 
-    git branch branch_name sha1_of_commit
-
-Push the branch to remote:
-
-    git push origin branch_name
-
-Rename other branch:
-
-    git branch -m old new
-
-Rename current branch:
-
-    git branch -m new
-
-Rename remote branch:
-
-    git branch -m old new               # Rename branch locally    
-    git push origin :old                 # Delete the old branch    
-    git push --set-upstream origin new   # Push the new branch, set local branch to track the new remote
-
-Delete a branch:
-
-    git branch -D the_local_branch
-
-    git push origin :the_remote_branch
+```
+git branch -D BRANCH
+git push REMOTE :BRANCH
+```
 
 Delete all local branches but master
 
-    git branch | grep -v "master" | xargs git branch -D
+```
+git branch | grep -v "master" | xargs git branch -D
+```
 
-### 🔍 Commit
+### Commit
 
-Undo last commit:
+Undo last commit
 
-    git reset --hard HEAD~1
+```
+git reset --hard HEAD~1
+```
 
-Squash last n commits into one commit:
+Squash last n commits into one commit
 
-    git rebase -i HEAD~5
+```
+git rebase -i HEAD~5
 
-    git reset --soft HEAD~5
-    git add .
-    git commit -m "Update"
-    git push -f origin master
+git reset --soft HEAD~5
+git add .
+git commit -m "Update"
+git push -f origin master
+```
 
 Move last commits into new branch:
 
-    git branch newbranch
-    git reset --hard HEAD~3 # Go back 3 commits. You *will* lose uncommitted work.*1
-    git checkout newbranch
+```
+git branch newbranch
+git reset --hard HEAD~3 # Go back 3 commits. You *will* lose uncommitted work.*1
+git checkout newbranch
+```
 
 Make changes to older commit
 
@@ -166,17 +255,7 @@ Add some commits to the top of the current branch:
 
     git cherry-pick hash_commit_A hash_commit_B
 
-### 🔍 Reflog
-
-Show reflog:
-
-    git reflog
-
-Get commit:
-
-    git reset --hard 0254ea7
-
-    git cherry-pick 12944d8
+### Rewriting History
 
 ### 🔍 Revert
 
@@ -204,35 +283,18 @@ Amend previous commit:
     git commit --amend -m "New commit message"
     git push --force <repository> <branch>
 
-### 🔍 Checkout
+### Reflog
 
-Checkout a tag:
+Show reflog:
 
-    git checkout tagname
+    git reflog
 
-    git checkout -b newbranchname tagname
+Get commit:
 
-Checkout a branch:
+    git reset --hard 0254ea7
 
-    git checkout destination_branch
+    git cherry-pick 12944d8
 
-Use -m if there is merge conflict:
-
-    git checkout -m master // from feature branch to master
-
-Checkout a commit:
-
-    git checkout commit_hash
-
-    git checkout -b newbranchname HEAD~4
-
-    git checkout -b newbranchname commit_hash
-
-    git checkout commit_hash file
-
-Checkout a file:
-
-    git checkout c5f567 -- Relative/Path/To/File
 
 ### 🔍 Stash
 
@@ -326,74 +388,6 @@ Find bug in commit history in a binary search tree style:
 
     git bisect bad
 
-## Git alias
-
-If there are commands that you use a lot, then consider using git alias. This is how to make alias for git status, then you can just type git st:
-
-    git config — global alias.st status
-
-Alias configurations are stored in .gitconfig file, you can learn some cool aliases from [thoughtbot](https://github.com/thoughtbot/dotfiles/blob/master/gitconfig) and [mathiasbynens](https://github.com/mathiasbynens/dotfiles/blob/master/.gitconfig).
-
-### Delete all local branches except master
-
-```
-git config --global alias.dlb '!git branch | grep -v "master" | xargs git branch -D'
-```
-
-### Prune upstream branches
-
-```
-git config --global alias.pu 'remote prune upstream'
-```
-
-## GUI clients
-
-Doing things in command line is cool and faster. However for viewing branches and commits, I find using a GUI client more visualizing and comfortable. You can see a list of all GUI clients [here](https://git-scm.com/download/gui/mac), I myself use [SourceTree](https://www.sourcetreeapp.com/).
-
-![](https://cdn-images-1.medium.com/max/2900/1*g2NL2JUXNAFWYrPydraqsg.png)
-
-## Check before you commit
-
-We usually have some experiment code that we don’t want they to step into our commit. I usually mark my experiment with // <TEST> but sometimes forget to unstage that.
-
-Starting with 2.9, Git has improvement on its commit hook which makes it globally using ***hooksPath.***
-
-Firstly we nee to create a file called pre-commit, and place it into, for example, /Users/khoa/hooks:
-
-```sh
-#!/bin/sh
-
-# https://appventure.me/2016/04/04/prevent-accidental-test-code-commits/
-
-if git rev-parse --verify HEAD >/dev/null 2>&1
-then
-  against=HEAD
-else
-  # Initial commit: diff against an empty tree object
-  against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
-fi
-
-# The special marker tag to mark things which we still need to change
-marker="<TEST>"
-
-# Redirect output to stderr.
-exec 1>&2
-
-if test $(git diff --cached -z $against | grep $marker | wc -c) != 0 
-then
-    cat <<\EOF
-    Error: Still has invalid debug markers in code:
-EOF
-    echo `git diff --cached -z $against -G $marker`
-    exit 1
-fi
-```
-
-In your project, run git config core.hooksPath /Users/khoa/hooks.
-
-Whenever you commit a file with that pattern, it won’t let you commit. For how to make this work in SourceTree, check:
-[**SourceTree and pre commit hook**
-*Pre-commit file works perfectly in terminal, but SourceTree seems to ignore it. I use both terminal and SourceTree, as…*medium.com](https://medium.com/@onmyway133/sourcetree-and-pre-commit-hook-52545f22fe10)
 
 ## Read more
 
