@@ -12,6 +12,14 @@
 
 ❤️❤️😇😍🤘❤️❤️
 
+# TABLE OF CONTENTS
+
+- [Checking](#checking)
+- [Committing](#committing)
+- [Rewriting history](#rewriting-history)
+- [Tracking](#tracking)
+- [Stashing](#stashing)
+
 # Checking
 
 ### Status
@@ -105,7 +113,7 @@ git diff BRANCH ANOTHER_BRANCH > file.diff
 git apply file.diff
 ```
 
-### Searchin
+### Searching
 
 Find bug in commit history in a binary search tree style:
 
