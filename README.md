@@ -19,6 +19,7 @@
 - [Rewriting history](#rewriting-history)
 - [Tracking](#tracking)
 - [Stashing](#stashing)
+- [Read more](#read-more)
 
 # Checking
 
