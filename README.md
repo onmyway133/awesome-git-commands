@@ -12,7 +12,7 @@
 
 ❤️❤️😇😍🤘❤️❤️
 
-# TABLE OF CONTENTS
+# Table of contents
 
 - [Checking](#checking)
 - [Committing](#committing)
