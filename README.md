@@ -12,7 +12,7 @@
 
 ❤️❤️😇😍🤘❤️❤️
 
-## Checking
+# Checking
 
 ### Status
 
@@ -53,32 +53,48 @@ git log — all — grep=’day of week’
 Checkout a tag
 
 ```
-    git checkout tagname
-
-    git checkout -b newbranchname tagname
+git checkout TAG
 ```
 
-Checkout a branch:
+```
+git checkout -b BRANCH TAG
+```
 
-    git checkout destination_branch
+Checkout a branch
 
-Use -m if there is merge conflict:
+```
+git checkout BRANCH
+```
 
-    git checkout -m master // from feature branch to master
+Use -m if there is merge conflict
 
-Checkout a commit:
+```
+git checkout -m BRANCH
+```
 
-    git checkout commit_hash
+Checkout a commit
 
-    git checkout -b newbranchname HEAD~4
+```
+git checkout COMMIT_HASH
+```
 
-    git checkout -b newbranchname commit_hash
+Checkout into a new branch
+```
+git checkout -b BRANCH HEAD~4
+git checkout -b BRANCH COMMIT_HASH
+```
 
-    git checkout commit_hash file
+Checkout a file in a commit
 
-Checkout a file:
+```
+git checkout COMMIT -- FILE_PATH
+```
 
-    git checkout c5f567 -- Relative/Path/To/File
+Checkout file at a specific commit and open in Visual Studio Code
+
+```
+git show BRANCH_TAG_COMMIT:FILE_PATH | code -
+```
 
 ### Diff
 
@@ -89,7 +105,18 @@ git diff BRANCH ANOTHER_BRANCH > file.diff
 git apply file.diff
 ```
 
-## Committing
+### Searchin
+
+Find bug in commit history in a binary search tree style:
+
+```
+git bisect start
+git bisect good
+git bisect bad
+```
+
+
+# Committing
 
 ### Tag
 
@@ -177,8 +204,9 @@ git branch BRANCH COMMIT_HASH
 ```
 
 Push the branch to remote
-
+```
 git push REMOTE BRANCH
+```
 
 Rename other branch
 
@@ -195,9 +223,9 @@ git branch -m NEW_BRANCH
 Rename remote branch
 
 ```
-git branch -m old new               # Rename branch locally    
-Git push origin :old                 # Delete the old branch    
-git push --set-upstream origin new   # Push the new branch, set local branch to track the new remote
+git branch -m OLD_BRANCH NEW_BRANCH        # Rename branch locally    
+git push origin :OLD_BRANCH                # Delete the old branch    
+git push --set-upstream REMOTE NEW_BRANCH  # Push the new branch, set local branch to track the new remote
 ```
 
 Delete a branch locally and remote
@@ -249,145 +277,176 @@ git add .
 git rebase --continue
 ```
 
-### 🔍 Cherry Pick
+### Merge
+
+Get their changes during git merge
+
+git pull -X theirs
+git checkout --theirs FILE_PATH
+git checkout --theirs .
+git add .
+
+git checkout BRANCH_A
+git merge -X theirs BRANCH_B
+
+Merge commits from master into feature branch
+
+```
+git checkout BRANCH
+git merge --no-ff BASE_BRANCH
+```
+
+### Fixup
+
+After commit, in interactive rebase, specify `fixup` instead of `pick`
+
+```
+git commit --fixup=HEAD~1
+git rebase HEAD~2 -i --autosquash
+```
+
+### Cherry Pick
 
 Add some commits to the top of the current branch:
 
-    git cherry-pick hash_commit_A hash_commit_B
+```
+git cherry-pick COMMIT_HASH_A COMMIT_HASH_B
+```
 
-### Rewriting History
+# Rewriting History
 
-### 🔍 Revert
+### Revert
 
-Revert the previous commit:
+Revert the previous commit
 
-    git revert HEAD
-    git commit
+```
+git revert HEAD
+```
 
-Revert the changes from previous 3 commits without making commit:
 
-    git revert --no-commit HEAD~3..
+Revert the changes from previous 3 commits without making commit
+```
+git revert --no-commit HEAD~3..
+```
 
-### 🔍 Amend
+### Amend
 
-Amend previous commit:
+Amend previous commit
 
-    git commit --amend
+```
+git commit --amend
+git commit --amend --no-edit
+git commit --amend -m "COMMIT_MESSAGE"
+```
 
-    git commit --amend --no-edit
+Changing git commit message after push
 
-    git commit --amend -m "New commit message"
-
-[Changing git commit message after push](http://stackoverflow.com/questions/8981194/changing-git-commit-message-after-push-given-that-no-one-pulled-from-remote):
-
-    git commit --amend -m "New commit message"
-    git push --force <repository> <branch>
+```
+git commit --amend -m "COMMIT_MESSAGE"
+git push --force REMOTE BRANCH
+```
 
 ### Reflog
 
-Show reflog:
+Show reflog
 
-    git reflog
+```
+git reflog
+```
 
-Get commit:
+Get commit
 
-    git reset --hard 0254ea7
+```
+git reset --hard COMMIT_HASH
+git cherry-pick COMMIT_HASH
+```
 
-    git cherry-pick 12944d8
+### Rebase
 
+Rebase the current branch onto another branch
 
-### 🔍 Stash
+git rebase BASE_BRANCH
 
-Save a change to stash:
+Continue rebase
 
-    git stash save "stash name"
+```
+git rebase --continue
+```
 
-    git stash
+Abort rebase
 
-List all stashes:
+```
+git rebase --abort
+```
 
-    git stash list
+Get their changes during git rebase
 
-Apply a stash:
+```
+git checkout --ours FILE_PATH
+git add FILE_PATH
+```
 
-    git stash pop
+# Tracking
 
-    git stash apply
+### Index
 
-    git stash apply stash@{2}
+Remove untracked files
+```
+git clean
+```
 
-### 🔍 Rebase
+Remove file from index
 
-Rebase the current branch onto master:
+```
+git reset FILE_PATH
+```
 
-    git rebase master // rebase the current branch onto master
+Reset the index to match the most recent commit
 
-Continue rebase:
+```
+git reset
+```
 
-    git rebase --continue
+Reset the index and the working directory to match the most recent commit
 
-Abort rebase:
+```
+git reset --hard
+```
 
-    git rebase --abort
+### Ignore
 
-### 🔍 .gitignore
+Un-track files that have just been declared in `.gitignore`
 
-Un-track files that have just been declared in .gitignore:
+```
+git rm -r --cached .
+git add .
+git commit -am "COMMIT_MESSAGE"
+```
 
-    git rm -r --cached .
-    git add .
-    git commit -am "Remove ignored files"
+# Stashing
 
-### 🔍 Index
+### Stash
 
-Remove untracked files:
+Save a change to stash
 
-    git clean
+```
+git stash save "STASH_NAME"
+git stash
+```
 
-Remove file from index:
+List all stashes
 
-    git reset file
+```
+git stash list
+```
 
-Reset the index to match the most recent commit:
+Apply a stash
 
-    git reset
-
-Reset the index and the working directory to match the most recent commit:
-
-    git reset --hard
-
-### 🔍 Misc
-
-Get their changes during git rebase:
-
-    git checkout --ours foo/bar.java
-    git add foo/bar.java
-
-Get their changes during git merge:
-
-    git pull -X theirs
-
-    git checkout --theirs path/to/the/conflicted_file.php
-
-    git checkout --theirs .
-    git add .
-
-    git checkout branchA
-    git merge -X theirs branchB
-
-Merge commits from master into feature branch:
-
-    git checkout feature1
-    git merge --no-ff master
-
-Find bug in commit history in a binary search tree style:
-
-    git bisect start
-
-    git bisect good
-
-    git bisect bad
-
+```
+git stash pop
+git stash apply
+git stash apply stash@{2}
+```
 
 ## Read more
 
