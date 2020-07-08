@@ -2,15 +2,16 @@
 
 🍴 Useful git commands for everyday use
 
-❤️ Support my app ❤️ 
+❤️ Support my apps ❤️ 
 
-- [Push Hero - pure Swift native macOS application to test push notifications](https://www.producthunt.com/posts/push-hero-2)
-- [PastePal - Pasteboard, note and shortcut manager](https://www.producthunt.com/posts/pastepal)
-- [Frame recorder - Recorder gif and video with frame](https://www.producthunt.com/posts/frame-recorder)
-- [Alias - App and file shortcut manager](https://www.producthunt.com/posts/alias-shortcut-manager)
-- [Other apps](https://onmyway133.github.io/projects/)
+- [Push Hero - pure Swift native macOS application to test push notifications](https://onmyway133.com/pushhero)
+- [PastePal - Pasteboard, note and shortcut manager](https://onmyway133.com/pastepal)
+- [Quick Check - smart todo manager](https://onmyway133.com/quickcheck)
+- [Alias - App and file shortcut manager](https://onmyway133.com/alias)
+- [My other apps](https://onmyway133.com/apps/)
 
 ❤️❤️😇😍🤘❤️❤️
+
 
 # Table of contents
 
@@ -310,8 +311,13 @@ git merge --no-ff BASE_BRANCH
 After commit, in interactive rebase, specify `fixup` instead of `pick`
 
 ```
-git commit --fixup=HEAD~1
+git commit --fixup HEAD~1
 git rebase HEAD~2 -i --autosquash
+```
+
+```
+git commit --fixup fb2f677
+git rebase -i --autosquash ac5db87
 ```
 
 ### Cherry Pick
